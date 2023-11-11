@@ -574,13 +574,22 @@ function Chat:scroll(direction)
   end)
 end
 
-function Chat:map(keys, fn, windows, modes)
+function Chat:map(keys, fn, windows, modes, do_not_force_normal_mode)
   if windows == nil or next(windows) == nil then
     windows = { self.settings_panel, self.sessions_panel, self.system_role_panel, self.chat_input, self.chat_window }
   end
 
+  local force_normal_mode = false
+  if do_not_force_normal_mode == nil or not do_not_force_normal_mode then
+      force_normal_mode = true
+  end
+
   if modes == nil or next(modes) == nil then
     modes = { "n", "i" }
+  end
+
+  if force_normal_mode then
+      modes = { "n" }
   end
 
   if type(keys) ~= "table" then
