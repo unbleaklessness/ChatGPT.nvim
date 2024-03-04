@@ -198,7 +198,7 @@ M.edit_with_instructions = function(output_lines, bufnr, selection, ...)
   )
 
   -- accept output window
-  for _, mode in ipairs({ "n", "i" }) do
+  for _, mode in ipairs({ "n" }) do
     instructions_input:map(mode, Config.options.edit_with_instructions.keymaps.accept, function()
       instructions_input.input_props.on_close()
       local lines = vim.api.nvim_buf_get_lines(output_window.bufnr, 0, -1, false)
@@ -208,7 +208,7 @@ M.edit_with_instructions = function(output_lines, bufnr, selection, ...)
   end
 
   -- use output as input
-  for _, mode in ipairs({ "n", "i" }) do
+  for _, mode in ipairs({ "n" }) do
     instructions_input:map(mode, Config.options.edit_with_instructions.keymaps.use_output_as_input, function()
       local lines = vim.api.nvim_buf_get_lines(output_window.bufnr, 0, -1, false)
       vim.api.nvim_buf_set_lines(input_window.bufnr, 0, -1, false, lines)
@@ -217,7 +217,7 @@ M.edit_with_instructions = function(output_lines, bufnr, selection, ...)
   end
 
   -- close
-  for _, mode in ipairs({ "n", "i" }) do
+  for _, mode in ipairs({ "n" }) do
     instructions_input:map(mode, Config.options.edit_with_instructions.keymaps.close, function()
       if vim.fn.mode() == "i" then
         vim.api.nvim_command("stopinsert")
@@ -229,7 +229,7 @@ M.edit_with_instructions = function(output_lines, bufnr, selection, ...)
   -- toggle settings
   local settings_open = false
   for _, popup in ipairs({ settings_panel, instructions_input }) do
-    for _, mode in ipairs({ "n", "i" }) do
+    for _, mode in ipairs({ "n" }) do
       popup:map(mode, Config.options.edit_with_instructions.keymaps.toggle_settings, function()
         if settings_open then
           layout:update(Layout.Box({
@@ -271,7 +271,7 @@ M.edit_with_instructions = function(output_lines, bufnr, selection, ...)
   -- cycle windows
   local active_panel = instructions_input
   for _, popup in ipairs({ input_window, output_window, settings_panel, instructions_input }) do
-    for _, mode in ipairs({ "n", "i" }) do
+    for _, mode in ipairs({ "n" }) do
       if mode == "i" and (popup == input_window or popup == output_window) then
         goto continue
       end
@@ -304,7 +304,7 @@ M.edit_with_instructions = function(output_lines, bufnr, selection, ...)
   -- toggle diff mode
   local diff_mode = Config.options.edit_with_instructions.diff
   for _, popup in ipairs({ settings_panel, instructions_input }) do
-    for _, mode in ipairs({ "n", "i" }) do
+    for _, mode in ipairs({ "n" }) do
       popup:map(mode, Config.options.edit_with_instructions.keymaps.toggle_diff, function()
         diff_mode = not diff_mode
         for _, winid in ipairs({ input_window.winid, output_window.winid }) do
